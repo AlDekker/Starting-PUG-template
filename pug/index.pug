@@ -1,0 +1,35 @@
+doctype html
+html 
+  head 
+    title Document
+    meta(charset="UTF-8")
+    base(href="/")
+    meta(name="description" content="")
+    meta(name="keywords" content="")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    //Theme-color on Chrome/Opera/Firefox
+    meta(name="theme-color" content="#1a1a1a")
+    //...on WinPhone
+    meta(name="msapplication-navbutton-color" content="#1a1a1a")
+    //...and on iOS/Safary
+    meta(name="apple-mobile-web-app-status-bar-style" content="#1a1a1a")
+    link(rel="shortcut icon" type="image/x-icon" href="img/favicon.ico")
+    link(rel="stylesheet" href="css/style.min.css")
+  body.is-home
+  
+    .wrapper
+      header.main-header(style="background-color: #333; color: #fff") HEADER
+      .content CONTENT
+      footer.main-footer(style="background-color: #111; color: #fff") FOOTER
+
+    <!--[if lt IE 9]>
+    script(src="libs/html5shiv/es5-shim.min.js")
+    script(src="libs/html5shiv/html5shiv.min.js")
+    script(src="libs/html5shiv/html5shiv-printshiv.min.js")
+    script(src="libs/respond/respond.min.js")
+    <![endif]-->
+
+    script(src="libs/jquery/dist/jquery.min.js")
+    script(src="js/all-scripts.min.js")

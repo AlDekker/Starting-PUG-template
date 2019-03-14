@@ -1,0 +1,59 @@
+@import "vars"
+@import "libs"
+@import "fonts"
+
+*, *:before, *:after
+  box-sizing: border-box
+
+a,a:hover, a:focus, a:active, 
+button, button:focus, button:active, 
+input, select, textarea
+  outline: none !important
+
+a
+  text-decoration: none  
+
+.link
+  color: $text-color
+  text-decoration: none
+  transition: all .3s ease
+  &:hover, &:focus
+    color: $theme-color
+  &:active
+    color: lighten($theme-color, 10%)
+
+h1,h2,h3,h4,h5,h6,
+.h1,.h2,.h3,.h4,.h5,.h6
+  color: $text-color
+
+ul, li
+  margin: 0
+  padding: 0
+  list-style-type: none
+
+body, html 
+  height: 100%  
+
+body
+  position: relative
+  margin: 0
+  padding: 0
+  min-width: 320px
+  font-family: $default-font
+  color: $text-color
+  line-height: 1.5
+  font-size: 16px
+  overflow-x: hidden
+
+.wrapper 
+  display: flex
+  flex-direction: column
+  height: 100%
+.content 
+  flex: 1 0 auto  
+
+.main-footer 
+  flex: 0 0 auto
+
+
+@import "media" // Staying at the end
