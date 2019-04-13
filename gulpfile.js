@@ -1,7 +1,7 @@
 //Settings
 var baseFolder = 'app',
     buildFolder = 'dist';
-    
+
 //Plugins
 var gulp          = require('gulp'),
     pug           = require('gulp-pug'),
@@ -14,17 +14,12 @@ var gulp          = require('gulp'),
     imagemin      = require('gulp-imagemin'),
     cache         = require('gulp-cache'),
     clean         = require('gulp-clean'),
-    rename        = require('gulp-rename');
+    rename        = require('gulp-rename'),
+    svgSprite     = require('gulp-svg-sprite'),
+    svgmin        = require('gulp-svgmin'),
+    cheerio       = require('gulp-cheerio'),
+    replace       = require('gulp-replace');
 
-//Pug    
-gulp.task('pug', function(){
-  return gulp.src('pug/**/*.pug')
-  .pipe(pug({
-    pretty: true
-  }))
-  .pipe(gulp.dest(baseFolder))
-  .pipe(browserSync.reload({stream: true}))
-});
 
 //Styles
 gulp.task('sass', function(){
@@ -63,31 +58,9 @@ gulp.task('js', function(){
   .pipe(browserSync.reload({stream: true}))
 });
 
-//BrowserSync
-gulp.task('browserSync' , function(){
-  browserSync({
-    server: {
-      baseDir: baseFolder
-    },
-    notify: false,
-    // tunnel: true,
-    // tunnel: "project"
-  });
-});
-
-// gulp.task('clean', function () {  
-//   return gulp.src(buildFolder, {read: false})
-//   .pipe(clean());
-// });   
-
-
-var svgSprite = require('gulp-svg-sprite'),
-    svgmin = require('gulp-svgmin'),
-    cheerio = require('gulp-cheerio'),
-    replace = require('gulp-replace');
-
+//SVG
 gulp.task('svg', function(){
-  return gulp.src(baseFolder+'/img/general/svg/*.svg')
+  return gulp.src(baseFolder+'/img/icons/svg/*.svg')
   .pipe(svgmin({
     js2svg: {
       pretty: true
@@ -109,11 +82,38 @@ gulp.task('svg', function(){
         }
     }
   }))
-  .pipe(gulp.dest(baseFolder+'/img/general/svg/'))
+  .pipe(gulp.dest(baseFolder+'/img/icons/svg/'))
 });
 
+//Pug    
+gulp.task('pug', function(){
+  return gulp.src('pug/**/*.pug')
+  .pipe(pug({
+    pretty: true
+  }))
+  .pipe(gulp.dest(baseFolder))
+  .pipe(browserSync.reload({stream: true}))
+});
 
+//HTML
+gulp.task('html', function() {
+	return gulp.src(baseFolder+'/*.html')
+	.pipe(browserSync.reload({ stream: true }))
+});
 
+//BrowserSync
+gulp.task('browserSync' , function(){
+  browserSync({
+    server: {
+      baseDir: baseFolder
+    },
+    notify: false,
+    // tunnel: true,
+    // tunnel: "project"
+  });
+});
+
+//Watch
 gulp.task('watch', function(){
   gulp.watch(baseFolder+'/sass/**/*.sass', gulp.parallel('sass'));
   gulp.watch([baseFolder+'/js/**/*.js', '!'+baseFolder+'/js/*.min.js'], gulp.parallel('js'));
@@ -121,6 +121,3 @@ gulp.task('watch', function(){
   gulp.watch(baseFolder+'/img/general/svg/*.svg', gulp.parallel('svg'));
 });
 gulp.task('default', gulp.parallel('watch', 'pug', 'sass', 'js', 'svg', 'browserSync'));
-
-
-
