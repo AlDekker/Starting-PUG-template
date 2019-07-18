@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Author",
+  "author": "Web-Branch",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.26.7",
@@ -33,5 +33,5 @@
     "type": "git",
     "url": ""
   },
-  "homepage": "https://github.com/AlDekker/Starting-PUG-template"
+  "homepage": "https://github.com/AlDekker/PUG-template#readme"
 }

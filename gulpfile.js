@@ -1,6 +1,5 @@
 //Settings
-var baseFolder = 'app',
-    buildFolder = 'dist';
+var baseFolder = 'app';
 
 //Plugins
 var gulp          = require('gulp'),
@@ -24,19 +23,13 @@ var gulp          = require('gulp'),
 //Styles
 gulp.task('sass', function(){
   return gulp.src(baseFolder+'/sass/**/*.sass')
-  .pipe(sass({
-    outputStyle: 'expanded'
-  }).on('error', sass.logError))
+  .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
   .pipe(autoprefixer({
-   browsers: ['last 15 versions'],
-   cascade: false
+		grid: true,
+		overrideBrowserslist: ['last 15 versions']
   }))
   .pipe(minCss())
-  .pipe(rename({
-   // prefix: "min-",
-   suffix: ".min",
-   // extname: ".css"
-  })) 
+  .pipe(rename({ suffix: ".min" })) 
   .pipe(gulp.dest(baseFolder+'/css'))
   .pipe(browserSync.reload({stream: true}))
 });
@@ -44,18 +37,20 @@ gulp.task('sass', function(){
 //Scripts
 gulp.task('js', function(){
   return gulp.src([
-    baseFolder+'/libs/jquery/dist/jquery.min.js',
+    baseFolder+'/libs/jquery/jquery.min.js',
     baseFolder+'/js/common.js'
   ])
-  .pipe(concat('all-scripts.js'))
+  .pipe(concat('scripts.js'))
   .pipe(uglify())
-  .pipe(rename({
-    // prefix: "min-",
-    suffix: ".min",
-    // extname: ".js"
-  }))
+  .pipe(rename({ suffix: ".min" }))
   .pipe(gulp.dest(baseFolder+'/js'))
   .pipe(browserSync.reload({stream: true}))
+});
+
+//Images
+gulp.task('images', function(){
+  return gulp.src(baseFolder+'/img/**/*.{png,jpg,jpeg,webp,raw,svg}')
+  .pipe(browserSync.reload({ stream: true }))
 });
 
 //SVG
@@ -117,7 +112,9 @@ gulp.task('browserSync' , function(){
 gulp.task('watch', function(){
   gulp.watch(baseFolder+'/sass/**/*.sass', gulp.parallel('sass'));
   gulp.watch([baseFolder+'/js/**/*.js', '!'+baseFolder+'/js/*.min.js'], gulp.parallel('js'));
-  gulp.watch('pug/**/*.pug', gulp.parallel('pug'));
+  gulp.watch(baseFolder+'/img/**/*', gulp.parallel('images'));
   gulp.watch(baseFolder+'/img/general/svg/*.svg', gulp.parallel('svg'));
+  gulp.watch('pug/**/*.pug', gulp.parallel('pug'));
+
 });
-gulp.task('default', gulp.parallel('watch', 'pug', 'sass', 'js', 'svg', 'browserSync'));
+gulp.task('default', gulp.parallel('watch', 'pug', 'sass', 'js', 'images', 'svg', 'browserSync'));
