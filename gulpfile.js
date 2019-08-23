@@ -1,5 +1,8 @@
 //Settings
-var baseFolder = 'app';
+var baseFolder  = 'app',
+    buildFolder = 'dist';
+
+var scriptsFileName = 'scripts';  
 
 //Plugins
 var gulp          = require('gulp'),
@@ -40,7 +43,8 @@ gulp.task('js', function(){
     baseFolder+'/libs/jquery/jquery.min.js',
     baseFolder+'/js/common.js'
   ])
-  .pipe(concat('scripts.js'))
+  .pipe(concat(scriptsFileName+'.js'))
+  .pipe(gulp.dest(baseFolder+'/js'))
   .pipe(uglify())
   .pipe(rename({ suffix: ".min" }))
   .pipe(gulp.dest(baseFolder+'/js'))
@@ -111,10 +115,38 @@ gulp.task('browserSync' , function(){
 //Watch
 gulp.task('watch', function(){
   gulp.watch(baseFolder+'/sass/**/*.sass', gulp.parallel('sass'));
-  gulp.watch([baseFolder+'/js/**/*.js', '!'+baseFolder+'/js/*.min.js'], gulp.parallel('js'));
+  gulp.watch([baseFolder+'/js/**/*.js', '!'+baseFolder+'/js/*.min.js', '!'+baseFolder+'/js/'+scriptsFileName+'.js'], gulp.parallel('js'));
   gulp.watch(baseFolder+'/img/**/*', gulp.parallel('images'));
   gulp.watch(baseFolder+'/img/general/svg/*.svg', gulp.parallel('svg'));
   gulp.watch('pug/**/*.pug', gulp.parallel('pug'));
 
 });
 gulp.task('default', gulp.parallel('watch', 'pug', 'sass', 'js', 'images', 'svg', 'browserSync'));
+
+
+gulp.task('removeBuild', function() {
+  return del(buildFolder);
+});
+
+gulp.task('build', function(){
+
+  // gulp.src([baseFolder+'/**/*', '!'+baseFolder+'/sass/**/*']).pipe(gulp.dest(buildFolder));
+
+  gulp.src([
+    baseFolder+'/*.html',
+	  // baseFolder+'/.htaccess',
+    // baseFolder+'/htacce.ss',
+    baseFolder+'/robots.txt'
+    ]).pipe(gulp.dest(buildFolder));
+
+  gulp.src([baseFolder+'/img/**/*']).pipe(gulp.dest(buildFolder+'/img'));
+
+  gulp.src([baseFolder+'/css/*.css']).pipe(gulp.dest(buildFolder+'/css'));
+
+  gulp.src([baseFolder+'/js/scripts.min.js']).pipe(gulp.dest(buildFolder+'/js'));
+
+  gulp.src([baseFolder+'/libs/**/*']).pipe(gulp.dest(buildFolder+'/libs'));
+
+  gulp.src([baseFolder+'/fonts/**/*']).pipe(gulp.dest(buildFolder+'/fonts'));
+
+});
