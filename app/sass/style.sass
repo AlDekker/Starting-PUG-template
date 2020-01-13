@@ -2,6 +2,7 @@
 @import "libs"
 @import "fonts"
 
+
 *, *:before, *:after
   box-sizing: border-box
 
@@ -42,11 +43,19 @@ body
   flex-direction: column
   height: 100%
 .content 
-  flex: 1 0 auto  
+  flex: 1 0 auto
 .footer 
-  flex: 0 0 auto
+  flex: 0 0 auto 
 /**/  
 
+.img-responsive
+  max-width: 100%
+  height: auto
+
+.img-bg
+  background-position: center
+  background-size: cover
+  background-repeat: no-repeat
 
 /* Custom container */
 // .container
@@ -54,6 +63,9 @@ body
 //   height: 100%
 //   margin: 0 auto
 //   padding: 0 $container-padding
+// .row
+//   display: flex
+
 
 
 @import "media" // Staying at the end
